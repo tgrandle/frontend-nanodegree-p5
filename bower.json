@@ -1,0 +1,8 @@
+{
+  "name": "nanodegree-p5",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.11.1",
+    "knockout": "~3.3.0"
+  }
+}
