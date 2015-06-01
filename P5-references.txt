@@ -3,6 +3,7 @@ http://stackoverflow.com/questions/18478919/bootstrap-3-0-and-google-maps-javasc
 https://support.google.com/maps/answer/18539?hl=en
 https://developers.google.com/maps/documentation/javascript/tutorial
 http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
+http://stackoverflow.com/questions/13082302/js-hint-dont-make-functions-within-a-loop
 
 http://discussions.udacity.com/t/project-example/4399
 http://discussions.udacity.com/t/problem-with-value-and-textinput-data-bindings/11851/2
