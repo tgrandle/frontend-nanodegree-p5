@@ -36,7 +36,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        tasks: ['jshint','jscsrc'],
+        tasks: ['jshint','jscs'],
         options: {
           livereload: true
         }
@@ -384,8 +384,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'newer:jscs',
-    //'jscs',
+    //'newer:jscs',
+    'jscs',
     'test',
     'build'
   ]);

@@ -2,7 +2,8 @@
   "name": "nanodegree-p5",
   "private": true,
   "dependencies": {
-    "jquery": "~1.11.1",
-    "knockout": "~3.3.0"
+    "jquery": "~2.1.4",
+    "knockout": "~3.3.0",
+    "bootstrap": "~3.3.4"
   }
 }
