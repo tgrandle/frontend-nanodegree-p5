@@ -12,11 +12,15 @@ body {
 }
 */
 /* give google maps some height */
-html, body, .container, .row, .col-md-9 { height: 100% }
+html, body, .container-fluid, .row, .col-md-9 { height: 100% }
 
 .browsehappy {
 margin: 0.2em 0;
 background: #ccc;
 color: #000;
 padding: 0.2em 0;
+}
+
+.sidebar {
+	top: 90px;
 }
