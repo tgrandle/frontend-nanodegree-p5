@@ -7,3 +7,5 @@ http://stackoverflow.com/questions/13082302/js-hint-dont-make-functions-within-a
 
 http://discussions.udacity.com/t/project-example/4399
 http://discussions.udacity.com/t/problem-with-value-and-textinput-data-bindings/11851/2
+
+https://github.com/asyraf9/bootstrap-sidebar
