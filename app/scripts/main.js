@@ -48,18 +48,25 @@ var myPlaces = [
   }
 ];
 
+var myPlacesKO = ko.observableArray(null);
+for (var a = 0; a < myPlaces.length; a++) {
+  myPlacesKO().push(myPlaces[a]);
+}
+
 var mapModel = {
   map: null,
   mapOptions: mapOptions,
-  places: myPlaces,
+  //places: myPlaces,
+  places: myPlacesKO,
 
   init: function() {
     'use strict';
+
     this.map = new google.maps.Map(document.getElementById('map-canvas'),
       this.mapOptions);
 
-    for (var i = 0; i < this.places.length; i++) {
-      var p = this.places[i];
+    for (var i = 0; i < this.places().length; i++) {
+      var p = this.places()[i];
       var newLatLng = new google.maps.LatLng(p.lat, p.longi);
       p.location = newLatLng;
       var newMarker = new google.maps.Marker({
@@ -90,13 +97,23 @@ var mapModel = {
 var popupController = {
   init: function() {
     'use strict';
-    mapModel.places.forEach(function(p) {
+    // mapModel.places.forEach(function(p) {
+    //   var myMarker = p.marker;
+    //   var myInfo = p.infoWindow;
+    //   google.maps.event.addListener(myMarker, 'click', function() {
+    //     myInfo.open(mapModel.map, myMarker);
+    //   });
+    // });
+
+    var placesForPopups = mapModel.getPlaces();
+    for (var i = 0; i < placesForPopups().length; i++) {
+      var p = placesForPopups()[i];
       var myMarker = p.marker;
       var myInfo = p.infoWindow;
       google.maps.event.addListener(myMarker, 'click', function() {
         myInfo.open(mapModel.map, myMarker);
       });
-    });
+    }
   }
 };
 var mapController = {
@@ -108,7 +125,8 @@ var mapController = {
     'use strict';
     mapModel.init();
 
-    this.locationData = ko.observableArray(mapModel.getPlaces());
+    //this.locationData = ko.observableArray(mapModel.getPlaces());
+    this.locationData = mapModel.getPlaces();
     for (var i = 0; i < this.locationData().length; i++) {
       var l = this.locationData()[i];
       this.searchResults().push(l.name);
