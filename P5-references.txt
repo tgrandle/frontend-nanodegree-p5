@@ -9,3 +9,8 @@ http://discussions.udacity.com/t/project-example/4399
 http://discussions.udacity.com/t/problem-with-value-and-textinput-data-bindings/11851/2
 
 https://github.com/asyraf9/bootstrap-sidebar
+
+http://stackoverflow.com/questions/2670356/looping-through-markers-with-google-maps-api-v3-problem
+https://developers.google.com/maps/documentation/javascript/examples/marker-remove
+
+https://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker

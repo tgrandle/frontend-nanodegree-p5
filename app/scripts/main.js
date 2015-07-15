@@ -5,84 +5,83 @@ var mapOptions = {
   center: sanDiegoLatlng,
   zoom: 12
 };
-var myPlaces = [
-  {
-    name: 'Lucha Libre Taco Shop',
-    lat: '32.743265',
-    longi: '-117.181573',
-    location: null,
-    infoWindow: null,
-    marker: null
-  },
-  {
-    name: 'Wahoo\'s Fish Taco',
-    lat: '32.755827',
-    longi: '-117.221982',
-    location: null,
-    infoWindow: null,
-    marker: null
-  },
-  {
-    name: 'Taco Express',
-    lat: '32.719245',
-    longi: '-117.166649',
-    location: null,
-    infoWindow: null,
-    marker: null
-  },
-  {
-    name: 'Roberto\'s Taco Shop',
-    lat: '32.755717',
-    longi: '-117.134002',
-    location: null,
-    infoWindow: null,
-    marker: null
-  },
-  {
-    name: 'La Playa Taco Shop',
-    lat: '32.789505',
-    longi: '-117.252987',
-    location: null,
-    infoWindow: null,
-    marker: null
-  }
-];
 
-var myPlacesKO = ko.observableArray(null);
-for (var a = 0; a < myPlaces.length; a++) {
-  myPlacesKO().push(myPlaces[a]);
-}
+var mapGlobal = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+var myPlaces = ko.observableArray([
+  /*
+  * now the data comes from Foursquare
+  */
+]);
+
+var popupController = {
+  places: null,
+  lastOpenI: null,
+  lastOpenM: null,
+  isOpen: false,
+
+  init: function() {
+    'use strict';
+    // this.places = mapModel.getPlaces();
+    this.places = myPlaces;
+  },
+
+  myClick: function(marker, infoWindow) {
+    'use strict';
+    if (this.isOpen) {
+      this.lastOpenI.close(mapGlobal, this.lastOpenM);
+    }
+    infoWindow.open(mapGlobal, marker);
+    this.isOpen = true;
+    this.lastOpenI = infoWindow;
+    this.lastOpenM = marker;
+
+    var mLatLong = marker.getPosition();
+    mapGlobal.setCenter(mLatLong);
+  }
+};
 
 var mapModel = {
   map: null,
   mapOptions: mapOptions,
-  //places: myPlaces,
-  places: myPlacesKO,
+  places: myPlaces,
 
   init: function() {
     'use strict';
 
-    this.map = new google.maps.Map(document.getElementById('map-canvas'),
-      this.mapOptions);
+    this.map = mapGlobal;
 
-    for (var i = 0; i < this.places().length; i++) {
-      var p = this.places()[i];
+    this.places().forEach(function(p) {
       var newLatLng = new google.maps.LatLng(p.lat, p.longi);
       p.location = newLatLng;
       var newMarker = new google.maps.Marker({
         position: newLatLng,
-        map: this.map,
+        map: mapGlobal,
         title: p.name,
         animation: null
       });
       p.marker = newMarker;
 
+      var markerHtml = '';
+      if (typeof p.tip !== 'undefined') {
+        markerHtml = '<h3>' + p.name + '</h3>' + '<i>' + p.tip +
+            '</i>' + '<br />Rating: ' + p.rating + '<br /><a href="' + p.url +
+            '">' + p.url + '</a>';
+      }else {
+        console.log('check ' + p.name);
+      }
+
       var newInfoWindow = new google.maps.InfoWindow({
-        content: '<p>' + p.name + '</p>'
+        content: markerHtml
       });
       p.infoWindow = newInfoWindow;
 
-    }
+      new google.maps.event.addListener(newMarker, 'click', function() {
+        popupController.myClick(newMarker, newInfoWindow);
+      });
+    });
+
   },
   getMap: function() {
     'use strict';
@@ -94,45 +93,32 @@ var mapModel = {
   }
 };
 
-var popupController = {
-  init: function() {
-    'use strict';
-    // mapModel.places.forEach(function(p) {
-    //   var myMarker = p.marker;
-    //   var myInfo = p.infoWindow;
-    //   google.maps.event.addListener(myMarker, 'click', function() {
-    //     myInfo.open(mapModel.map, myMarker);
-    //   });
-    // });
-
-    var placesForPopups = mapModel.getPlaces();
-    for (var i = 0; i < placesForPopups().length; i++) {
-      var p = placesForPopups()[i];
-      var myMarker = p.marker;
-      var myInfo = p.infoWindow;
-      google.maps.event.addListener(myMarker, 'click', function() {
-        myInfo.open(mapModel.map, myMarker);
-      });
-    }
-  }
-};
-var mapController = {
-  locationData: ko.observableArray(null),
+var searchController = {
+  locationData: null,
   searchResults: ko.observableArray(null),
   searchFilter: '',
+  markerArray: [],
 
   init: function() {
     'use strict';
     mapModel.init();
+    popupController.init();
 
-    //this.locationData = ko.observableArray(mapModel.getPlaces());
     this.locationData = mapModel.getPlaces();
     for (var i = 0; i < this.locationData().length; i++) {
       var l = this.locationData()[i];
-      this.searchResults().push(l.name);
+      this.searchResults.push(l.name);
+
+      this.markerArray.push(l);
     }
 
-    popupController.init();
+  },
+
+  setMap: function(newMap) {
+    'use strict';
+    this.markerArray.forEach(function(m) {
+      m.marker.setMap(newMap);
+    });
   },
 
   filterList: function() {
@@ -145,22 +131,75 @@ var mapController = {
   filterBySearchFilter: function() {
     'use strict';
     var matchingLocations = [];
+    var matchingFullObj = [];
 
     for (var i = 0; i < this.locationData().length; i++) {
       if (this.locationData()[ i ].name.toLowerCase().search(
           this.searchFilter.toLowerCase()) !== -1) {
         matchingLocations.push(this.locationData()[ i ].name);
+
+        matchingFullObj.push(this.locationData()[ i ]);
       }
     }
-    return matchingLocations;
-  },
 
-  getMap: function() {
-    'use strict';
-    return mapModel.getMap();
+    this.setMap(null);
+    matchingFullObj.forEach(function(q) {
+      q.marker.setMap(mapGlobal);
+    });
+
+    return matchingLocations;
   }
 };
 
-google.maps.event.addDomListener(window, 'load', mapController.init());
+var fetchData = {
+  fetch: function() {
+    'use strict';
 
-ko.applyBindings(mapController);
+    var lClientId = 'DCCR0NACVZOUAFB15HNOG3ULSY25I42PUZFK5D5K1X3V4BXM';
+    var lSecretId = 'FUZTLZ2FC0Q3OIXE0WIS2ETHQ3XUBT22PKOXFVVCF1RXQQHE';
+
+    var url = 'https://api.foursquare.com/v2/venues/explore' +
+      '?client_id=' + lClientId +
+      '&client_secret=' + lSecretId +
+      '&v=20130815' +
+      '&ll=' + sanDiegoLatlng.toUrlValue() +
+      '&query=taco';
+
+    $.ajax({
+      url: url,
+      dataType: 'json'
+    }).done(function(data) {
+      data.response.groups[0].items.forEach(function(i) {
+        var obj = {
+          name: i.venue.name,
+          details: i.venue.url + ' : ' + i.venue.rating +
+              ' : ' + i.tips[0].text,
+          url: i.venue.url,
+          rating: i.venue.rating,
+          tip: i.tips[0].text,
+          lat: i.venue.location.lat,
+          longi: i.venue.location.lng
+        };
+        myPlaces().push(obj);
+      }); //end forEach
+
+      if (myPlaces().length < 1) {
+        console.log('error block 1');
+        $('#myModal').modal();
+      }
+
+    }).error(function() {
+      console.log('error block 2');
+
+      $('#myModal').modal();
+    }).always(function() {
+      searchController.init();
+    });
+
+  }
+
+};
+
+google.maps.event.addDomListener(window, 'load', fetchData.fetch());
+
+ko.applyBindings(searchController);
