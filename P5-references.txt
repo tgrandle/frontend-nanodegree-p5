@@ -14,3 +14,5 @@ http://stackoverflow.com/questions/2670356/looping-through-markers-with-google-m
 https://developers.google.com/maps/documentation/javascript/examples/marker-remove
 
 https://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker
+
+https://github.com/yeoman/generator-angular/issues/1116
