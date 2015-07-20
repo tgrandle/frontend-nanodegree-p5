@@ -4,10 +4,10 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "knockout": "~3.3.0",
-    "bootstrap": "~3.3.4",
+    "bootstrap": "=3.3.4",
     "bootstrap-sidebar": "~0.2.2"
   },
   "resolutions": {
-    "bootstrap": "~3.3.4"
+    "bootstrap": "3.3.4"
   }
 }
