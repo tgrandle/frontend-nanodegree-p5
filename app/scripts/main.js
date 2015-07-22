@@ -167,7 +167,8 @@ var fetchData = {
 
     $.ajax({
       url: url,
-      dataType: 'json'
+      dataType: 'json',
+      timeout: 3000 //3 seconds
     }).done(function(data) {
       data.response.groups[0].items.forEach(function(i) {
         var obj = {
