@@ -1,5 +1,21 @@
 /*global google, ko */
 
+/*
+* this works for first load
+* but does not detect disconnects later
+*
+* I hope that this is enough disconnect logic
+* https://discussions.udacity.com/t/need-help-using-offline-js/26091/9
+*/
+if (typeof google === 'object' && typeof google.maps === 'object') {
+  // Google maps loaded
+
+} else {
+  // Failed to load the Google Maps
+  console.log('google failed to load');
+  $('#myModal').modal();
+}
+
 var sanDiegoLatlng = new google.maps.LatLng(32.7337316, -117.1931538);
 var mapOptions = {
   center: sanDiegoLatlng,
@@ -164,6 +180,9 @@ var fetchData = {
       '&v=20130815' +
       '&ll=' + sanDiegoLatlng.toUrlValue() +
       '&query=taco';
+
+    // for testing
+    // var urlMock = 'http://www.mocky.io/v2/55affffee37b457f13e77bd0';
 
     $.ajax({
       url: url,
