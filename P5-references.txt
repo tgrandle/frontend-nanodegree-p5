@@ -16,3 +16,7 @@ https://developers.google.com/maps/documentation/javascript/examples/marker-remo
 https://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker
 
 https://github.com/yeoman/generator-angular/issues/1116
+
+http://api.jquery.com/jQuery.ajax/#toptions
+https://github.com/oskarkrawczyk/heyoffline.js
+http://www.mocky.io/
