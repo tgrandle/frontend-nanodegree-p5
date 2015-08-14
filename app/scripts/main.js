@@ -39,7 +39,6 @@ var popupController = {
 
   init: function() {
     'use strict';
-    // this.places = mapModel.getPlaces();
     this.places = myPlaces;
   },
 
@@ -81,9 +80,11 @@ var mapModel = {
 
       var markerHtml = '';
       if (typeof p.tip !== 'undefined') {
-        markerHtml = '<h3>' + p.name + '</h3>' + '<i>' + p.tip +
-            '</i>' + '<br />Rating: ' + p.rating + '<br /><a href="' + p.url +
-            '">' + p.url + '</a>';
+        markerHtml = '<div class="marker"><h4>' + p.name +
+            '</h4><div><p class="hidden-xs hidden-sm">' +
+            '<i>' + p.tip + '</i>' + '<br />Rating: ' + p.rating +
+            '<br /></p><a href="' + p.url +
+            '">' + p.url + '</a></div></div>';
       }else {
         console.log('check ' + p.name);
       }
