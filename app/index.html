@@ -19,9 +19,7 @@
     <!-- endbuild -->
 
     <!-- will need to use an api key at some point -->
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js">
-    </script>
+    <script src="https://maps.googleapis.com/maps/api/js" />
 
   </head>
   <body>
@@ -60,21 +58,21 @@
         </div>
 
         <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-9" id="map-canvas">
-            </div>
+            <div class="row">
+                <div class="col-md-9" id="map-canvas">
+                </div>
 
-            <div class="col-xs-7 col-sm-5 col-md-3 sidebar sidebar-right sidebar-animate sidebar-md-show">
-                <div>
-                    <input type="text" id="filter-box" placeholder="Filter results" data-bind="textInput: searchController.searchFilter, event: { keyup: searchController.filterList }">
-                </div>
-                <div id="places">
-                    <ul data-bind="foreach: searchController.searchResults">
-                        <li data-bind="text: $data"></li>
-                    </ul>
+                <div class="col-xs-7 col-sm-5 col-md-3 sidebar sidebar-right sidebar-animate sidebar-md-show">
+                    <div>
+                        <input type="text" id="filter-box" placeholder="Filter results" data-bind="textInput: searchController.searchFilter, event: { keyup: searchController.filterList }">
+                    </div>
+                    <div id="places">
+                        <ul data-bind="foreach: searchController.searchResults">
+                            <li data-bind="text: $data"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -89,5 +87,5 @@
     <!-- build:js({app,.tmp}) scripts/main.js -->
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
-</body>
+  </body>
 </html>
