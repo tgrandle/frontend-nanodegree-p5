@@ -7,11 +7,8 @@
 * I hope that this is enough disconnect logic
 * https://discussions.udacity.com/t/need-help-using-offline-js/26091/9
 */
-if (typeof google === 'object' && typeof google.maps === 'object') {
-  // Google maps loaded
-
-} else {
-  // Failed to load the Google Maps
+if (typeof google !== 'object' || typeof google.maps !== 'object') {
+  // Failed to load Google Maps
   console.log('google failed to load');
   $('#myModal').modal();
 }
