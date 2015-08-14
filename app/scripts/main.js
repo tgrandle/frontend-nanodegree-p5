@@ -51,6 +51,7 @@ var popupController = {
 
     var mLatLong = marker.getPosition();
     mapGlobal.setCenter(mLatLong);
+    marker.setAnimation(google.maps.Animation.BOUNCE);
   }
 };
 
