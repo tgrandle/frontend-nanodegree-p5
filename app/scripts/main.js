@@ -23,16 +23,16 @@ var mapGlobal = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
 function Place(name, url, rating, tip, lat, longi) {
-	'use strict';
-	this.name = name;
-	this.url = url;
-	this.rating = rating;
-	this.tip = tip;
-	this.lat = lat;
-	this.longi = longi;
-	this.marker = '';
-	this.infoWindow = '';
-	this.location = '';
+  'use strict';
+  this.name = name;
+  this.url = url;
+  this.rating = rating;
+  this.tip = tip;
+  this.lat = lat;
+  this.longi = longi;
+  this.marker = '';
+  this.infoWindow = '';
+  this.location = '';
 }
 
 var popupController = {
@@ -42,7 +42,6 @@ var popupController = {
 
   init: function() {
     'use strict';
-    // this.places = myPlaces;
   },
 
   myClick: function(marker, infoWindow) {
@@ -62,17 +61,15 @@ var popupController = {
   }
 };
 
-
 var PlacesController = {
-	places: ko.observableArray([]),
+  places: ko.observableArray([]),
 
-	gotClick: function(place){
-		'use strict';
-		console.log('list click on ' + place.name);
-		var m = place.marker;
-		var i = place.infoWindow;
-		popupController.myClick(m, i);
-	}
+  gotClick: function(place) {
+    'use strict';
+    var m = place.marker;
+    var i = place.infoWindow;
+    popupController.myClick(m, i);
+  }
 
 };
 
@@ -143,7 +140,6 @@ var searchController = {
     this.locationData = PlacesController.places;
     for (var i = 0; i < this.locationData().length; i++) {
       var l = this.locationData()[i];
-      // this.searchResults.push(l.name);
       this.searchResults.push(l);
 
       this.markerArray.push(l);
@@ -184,7 +180,6 @@ var searchController = {
       q.marker.setMap(mapGlobal);
     });
 
-    // return matchingLocations;
     return matchingFullObj;
   }
 };
@@ -212,28 +207,9 @@ var fetchData = {
       timeout: 3000 //3 seconds
     }).done(function(data) {
       data.response.groups[0].items.forEach(function(i) {
-        // var obj = {
-        //   name: i.venue.name,
-        //   details: i.venue.url + ' : ' + i.venue.rating +
-        //       ' : ' + i.tips[0].text,
-        //   url: i.venue.url,
-        //   rating: i.venue.rating,
-        //   tip: i.tips[0].text,
-        //   lat: i.venue.location.lat,
-        //   longi: i.venue.location.lng
-        // };
-        // myPlaces().push(obj);
-
-        // var obj2 = placeModel;
-        // obj2.name = i.venue.name;
-        // obj2.url = i.venue.url;
-        // obj2.rating = i.venue.rating;
-        // myPlaces2.push(obj2);
-
-        var obj3 = new Place(i.venue.name, i.venue.url, i.venue.rating, i.tips[0].text,
-        	i.venue.location.lat, i.venue.location.lng);
+        var obj3 = new Place(i.venue.name, i.venue.url, i.venue.rating,
+            i.tips[0].text, i.venue.location.lat, i.venue.location.lng);
         PlacesController.places().push(obj3);
-
       }); //end forEach
 
       if (PlacesController.places().length < 1) {
@@ -247,10 +223,7 @@ var fetchData = {
       $('#myModal').modal();
     }).always(function() {
       searchController.init();
-
-	  // ko.applyBindings(PlacesController);
-	  // mapModel.init();
-	  ko.applyBindings(searchController);
+      ko.applyBindings(searchController);
     });
 
   }
@@ -258,5 +231,5 @@ var fetchData = {
 };
 
 google.maps.event.addDomListener(window, 'load', fetchData.fetch());
-// ko.applyBindings(PlacesController);
-// ko.applyBindings(searchController);
+
+// ko bindings are inside the fetch ajax .always()
