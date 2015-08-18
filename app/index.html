@@ -67,8 +67,9 @@
                         <input type="text" id="filter-box" placeholder="Filter results" data-bind="textInput: searchController.searchFilter, event: { keyup: searchController.filterList }">
                     </div>
                     <div id="places">
+                        <!-- <ul data-bind="foreach: PlacesController.places"> -->
                         <ul data-bind="foreach: searchController.searchResults">
-                            <li data-bind="text: $data"></li>
+                            <li data-bind="text: name, click: PlacesController.gotClick"></li>
                         </ul>
                     </div>
                 </div>
