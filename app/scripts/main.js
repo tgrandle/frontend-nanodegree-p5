@@ -188,8 +188,8 @@ var fetchData = {
   fetch: function() {
     'use strict';
 
-    var lClientId = 'DCCR0NACVZOUAFB15HNOG3ULSY25I42PUZFK5D5K1X3V4BXM';
-    var lSecretId = 'FUZTLZ2FC0Q3OIXE0WIS2ETHQ3XUBT22PKOXFVVCF1RXQQHE';
+    var lClientId = 'removed';
+    var lSecretId = 'removed';
 
     var url = 'https://api.foursquare.com/v2/venues/explore' +
       '?client_id=' + lClientId +
